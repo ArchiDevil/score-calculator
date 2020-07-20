@@ -7,10 +7,14 @@ from flask import Flask, redirect, url_for
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+
+    #говорит где лежит база данных и как она называется
+    db_path = os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(app.instance_path, 'flaskr.sqlite'))
+    secret_key = os.environ.get('SECRET_KEY', 'dev')
+
     app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE='sqlite:///' + os.path.join(app.instance_path, 'flaskr.sqlite'), #говорит где лежит база данных и как она называется
-        # os.path.join - создает путь с /
+        SECRET_KEY=secret_key,
+        DATABASE=db_path,
     )
 
     if test_config is None: # для будущихх тестов
