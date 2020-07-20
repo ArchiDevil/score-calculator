@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <title>Story points calculator</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="h1"><small class="text-muted">Story points calculator</small></p>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12, col-sm-5">
+                    <table class="table table-hover table-bordered table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Factor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for el in print_members %}
+                        <tr>
+                            <td>{{el.member_name}}</td>
+                            <td>{{el.factor}}</td>
+                            <td>
+                                <a href="{{ url_for('blueprint.delete_member', member_id=el.id) }}">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-2 d-none d-md-block">
+                    <img src="https://cdn.pixabay.com/photo/2020/06/21/16/51/rabbit-5325832_960_720.png" class="img-fluid" alt="Адаптивные изображения">
+                </div>
+
+
+
+                <div class="col-xs-12, col-sm-5">
+                    <table class="table table-hover table-bordered table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Sprint name</th>
+                                <th>Points</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        </tbody>
+
+                            {% for el in print_stats %}
+                            <tr>
+                                <td>{{el.sprint_name}}</td>
+                                <td>{{el.result}}</td>
+                                <td><a href="{{ url_for('blueprint.delete_sprint', sprint_id=el.id) }}">Delete</a></td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <p><a href="{{ url_for('blueprint.addmember') }}">Add new member</a></p>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        {% if button_start == "False" %}
+                        <a class="btn btn-outline-primary disabled" href="{{url_for('blueprint.start')}}" role="button" aria-disabled="true">Start sprint</a>
+                        {% endif %}
+
+                        {% if button_start == "True" %}
+                        <a class="btn btn-outline-primary" href="{{url_for('blueprint.start')}}" role="button">Start sprint</a>
+                        {% endif %}
+
+                        {% if button_finish == "False" %}
+                        <a class="btn btn-outline-primary disabled" href="{{url_for('blueprint.finish')}}" role="button" aria-disabled="true">Finish sprint</a>
+                        {% endif %}
+
+                        {% if button_finish == "True" %}
+                        <a class="btn btn-outline-primary" href="{{url_for('blueprint.finish')}}" role="button">Finish sprint</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
+</html>
