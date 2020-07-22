@@ -277,3 +277,35 @@ def test_check_button(logged_client):
     assert response.status_code == 200
     assert b'Calculate' in response.data
     assert b'Cancel' in response.data
+
+def test_check_rightwork(logged_client, app):
+    with app.app_context():
+        with get_db() as sess:
+            data=sess.query(Member).all()
+            for el in data:
+                sess.delete(el)
+            sess.add_all([
+                Member(member_name="DB", factor=0.5, number_team=1),
+                Member(member_name="AM", factor=0.5, number_team=1),
+                Member(member_name="MB", factor=0.5, number_team=1),
+                Member(member_name="VM", factor=0.5, number_team=1),
+                Member(member_name="SU", factor=0.5, number_team=1),
+                Member(member_name="AP", factor=0.5, number_team=1),
+                Member(member_name="DH", factor=0.5, number_team=1),
+            ])
+            sess.commit()
+
+    response = logged_client.post('/team/start',
+                                  data={
+                                      'workdays': '9',
+                                      'missing_days1': '9',
+                                      'missing_days2': '7',
+                                      'missing_days3': '0',
+                                      'missing_days4': '0',
+                                      'missing_days5': '0',
+                                      'missing_days6': '0',
+                                      'missing_days7': '1',
+                                  })
+
+    assert response.status_code == 200
+    assert b'Calculate number of points for the next sprint' in response.data

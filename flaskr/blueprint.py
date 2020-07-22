@@ -269,7 +269,7 @@ def start():
             missing_r_dict[name_key] = int(missing_r_dict[name_key])
         except:
             return answer
-        if missing_r_dict[name_key] >= workdays or missing_r_dict[name_key] < 0:
+        if missing_r_dict[name_key] > workdays or missing_r_dict[name_key] < 0:
             return answer
 
     if not missing_r_dict:
